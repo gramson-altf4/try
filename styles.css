@@ -354,10 +354,3 @@ body {
         background: inherit;
         padding-top: 10px;
     }
-
-/* Ajuste adicional para pantallas muy pequeñas */
-@media (max-width: 360px) {
-    .card.expanded {
-        width: 95vw;
-        height: 80vh;
-    }
