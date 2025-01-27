@@ -158,16 +158,20 @@ body {
     height: 100%;
 }
 
-/* Ajustes responsivos para móviles */
+/* Ajustes específicos para móviles */
 @media (max-width: 768px) {
     .card.expanded {
-        transform: translate(-50%, -50%) scale(1.5); /* Escala reducida en móviles */
-        height: 350px; /* Un poco más alto en móviles para mejor legibilidad */
+        width: 90vw; /* Ancho relativo a la pantalla */
+        height: 70vh; /* Alto relativo a la pantalla */
+        transform: translate(-50%, -50%) scale(1); /* Sin escala en móviles */
+        max-width: 350px; /* Máximo ancho en píxeles */
+        max-height: 500px; /* Máximo alto en píxeles */
     }
     
-    .card.expanded .card-back {
-        padding: 15px; /* Ajuste del padding para mejor uso del espacio */
-    }
+    . .card.expanded .card-back {
+        padding: 15px;
+        overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+        -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
 }
 
 .card-inner {
@@ -342,3 +346,18 @@ body {
         font-size: calc(var(--size) * 0.8);
     }
 }
+    .card.expanded .card-back h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        position: sticky; /* Mantiene el título visible */
+        top: 0;
+        background: inherit;
+        padding-top: 10px;
+    }
+
+/* Ajuste adicional para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .card.expanded {
+        width: 95vw;
+        height: 80vh;
+    }
