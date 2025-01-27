@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feliz Aniversario</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('img/backgroundn.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        #videoContainer {
+            width: 100%;
+            max-width: 1200px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        #introVideo {
+            width: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: rgba(206, 143, 182, 0.906);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(206, 143, 182, 0.5);
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            z-index: 999;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Feliz Aniversario</h1>
+    
+    <button id="playButton" class="button">
+        Reproducir Video
+    </button>
+
+    <button id="continueButton" class="button hidden">
+        Continuar
+    </button>
+
+    <div id="overlay"></div>
+    
+    <div id="videoContainer">
+        <video id="introVideo">
+            <source src="img/intro.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <script>
+        const playButton = document.getElementById('playButton');
+        const continueButton = document.getElementById('continueButton');
+        const videoContainer = document.getElementById('videoContainer');
+        const video = document.getElementById('introVideo');
+        const overlay = document.getElementById('overlay');
+        
+        playButton.addEventListener('click', function() {
+            playButton.classList.add('hidden');
+            videoContainer.style.display = 'block';
+            overlay.style.display = 'block';
+            video.play();
+        });
+
+        video.addEventListener('ended', function() {
+            videoContainer.style.display = 'none';
+            overlay.style.display = 'none';
+            continueButton.classList.remove('hidden');
+        });
+
+        continueButton.addEventListener('click', function() {
+            window.location.href = 'aniversario.html';
+        });
+    </script>
+</body>
+</html>

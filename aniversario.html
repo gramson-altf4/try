@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Agregamos los estilos directamente aquí para asegurarnos que funcionen */
+        .floating-heart {
+            position: fixed;
+            color: rgba(255, 192, 203, 0.3);
+            font-size: var(--size);
+            pointer-events: none;
+            z-index: 0;
+            left: var(--startX);
+            animation: floatingHearts var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            top: 100vh; /* Comenzamos desde abajo de la pantalla */
+        }
+
+        @keyframes floatingHearts {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-120vh) translateX(var(--moveX));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic">
+        <source src="img/musica.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="blur-container" id="blurContainer"></div>
+    <div class="grid-container" id="imageGrid"></div>
+
+    <script>
+        // Datos de las imágenes y textos
+        const cards = [
+            { 
+                id: 1, 
+                image: "img/1.1.jpg",
+                title: "30 de marzo 2024",
+                text: "el primer dia que salimos, el dia que tomamos una desicion que no sabiamos que cambiaria nuestras vidas, el dia en el que po primera vez podria conectar con la persona que quier que me acompañe el resto de mi vida", 
+            },
+            { 
+                id: 2, 
+                image: "img/2.2.jpg",
+                title: "27 de julio 2024",
+                text: "El primer dia que fui a tu casa, el primer dia que convivi con tus papás, nunca olvidare lo emocionado y nervioso que me encontraba, aunque no logramos hablar con tus papás fue un gran paso para ambos y par alo que nos prepararia el futuro", 
+            },
+            { 
+                id: 3, 
+                image: "img/3.3.jpg",
+                title: "25 de agosto 2024",
+                text: "cada momento a tu lado para mi es unico, cada dia tiene algo especial que nos ahce recordarlo por mucho tiempo y eso es porque tu eres especial para mi, eres tu quien hace mis dias especiales, si tu no estuvieras a mi lado seguro que nada seria igual", 
+            },
+            { 
+                id: 4, 
+                image: "img/4.4.jpg",
+                title: "21 de septiembre 2024",
+                text: "el dia que nos atascamos de comida china y ni nos la acabamos mi amor JAJAJA, te amo tanto mi cielo contigo hasta una simple salidita a comer puede convertirse en un hermoso recuerdo y una experiencia maravillosa, contigo a mi lafo quiero vivir muchos dias mas de vida", 
+            },
+            { 
+                id: 5, 
+                image: "img/5.jpg",
+                title: "18 de octubre 2024",
+                text: "nuestra primera salidita a un lugar lejitos, nuestra primera aventura juntos, desde el camino, cuando comimos, cuando llegamos y caminamos por el mirador juntos, cada momento vivido a tu lado ese dia, cadarisa, cada chiste, cada mirada son momentosque nunca en la vida olvidare", 
+            },
+            { 
+                id: 6, 
+                image: "img/6.jpg",
+                title: "19 de octubre 2024",
+                text: "el dia que te tomaste la foto con el miniom amor jaja, ves como te digo que contigo cualquier dia se vuelve algo especial quiero muchos masm omentos magicos contigo, muchas mas anecdotas a tu lado, cosas que un dia recordaremos con mucho amor y por toda la vida", 
+            },
+            { 
+                id: 7, 
+                image: "img/7.jpg",
+                title: "26 de octubre 2024",
+                text: "El dia que me celebraste mi cumpleaños, nunca olvidare ese dia, la unica ocasion en la que de verdad me senti feliz y emocionado por mi cumpleaños y fue porque tu lo hiciste especial, fue todo gracias a ti, y aunque tu digas que no es necesario te lo agradecere toda la vida",  
+            },
+            { 
+                id: 8, 
+                image: "img/8.jpg",
+                title: "30 de marzo 2024",
+                text: "30 de Marzo 2024",  
+            },
+            { 
+                id: 9, 
+                image: "img/9.jpg",
+                title: "30 de marzo 2024",
+                text: "30 de Marzo 2024",  
+            },
+            { 
+                id: 10, 
+                image: "img/10.jpg",
+                title: "30 de marzo 2024",
+                text: "30 de Marzo 2024",  
+            },
+            { 
+                id: 11, 
+                image: "img/11.jpg",
+                title: "30 de marzo 2024",
+                text: "30 de Marzo 2024", 
+            },
+            { 
+                id: 12, 
+                image: "img/12.jpg",
+                title: "30 de marzo 2024",
+                text: "30 de Marzo 2024", 
+            }
+        ];
+
+        let expandedCard = null;
+
+        function createFloatingHearts() {
+    const colors = ['#ffb6c1', '#ff69b4', '#db7093', '#ffc0cb']; // Variedad de tonos rosa
+
+    for(let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '♥';
+        heart.className = 'floating-heart';
+        
+        // Valores aleatorios mejorados
+        const startX = Math.random() * window.innerWidth;
+        const moveX = (Math.random() - 0.5) * 300; // Más movimiento horizontal
+        const size = Math.random() * 30 + 15; // Tamaños entre 15px y 45px
+        const duration = Math.random() * 15 + 10; // Entre 10 y 25 segundos
+        const delay = -Math.random() * 20; // Retraso inicial aleatorio
+        
+        // Aplicar estilos
+        heart.style.setProperty('--startX', startX + 'px');
+        heart.style.setProperty('--moveX', moveX + 'px');
+        heart.style.setProperty('--size', size + 'px');
+        heart.style.setProperty('--duration', duration + 's');
+        heart.style.setProperty('--delay', delay + 's');
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        document.body.appendChild(heart);
+    }
+
+    // Recrear corazones cada cierto tiempo
+    setTimeout(createFloatingHearts, 20000); // Crear nuevos corazones cada 20 segundos
+}
+
+// Iniciar la creación de corazones
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createFloatingHearts);
+} else {
+    createFloatingHearts();
+}
+        function handleCardClick(cardDiv) {
+            const overlay = document.getElementById('overlay');
+            const blurContainer = document.getElementById('blurContainer');
+            
+            if (cardDiv.classList.contains('expanded')) {
+                cardDiv.classList.remove('expanded');
+                overlay.classList.remove('active');
+                blurContainer.classList.remove('active');
+                expandedCard = null;
+                
+                setTimeout(() => {
+                    cardDiv.classList.remove('flipped');
+                }, 300);
+            } else {
+                if (expandedCard) {
+                    expandedCard.classList.remove('expanded', 'flipped');
+                }
+                
+                cardDiv.classList.add('expanded', 'flipped');
+                overlay.classList.add('active');
+                blurContainer.classList.add('active');
+                expandedCard = cardDiv;
+            }
+        }
+
+        function createCards() {
+            const container = document.getElementById('imageGrid');
+            const overlay = document.getElementById('overlay');
+            
+            cards.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card';
+                
+                cardDiv.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="${card.image}" alt="Imagen ${card.id}">
+                        </div>
+                        <div class="card-back">
+                            <h3>${card.title}</h3>
+                            <p>${card.text}</p>
+                        </div>
+                    </div>
+                `;
+
+                cardDiv.addEventListener('click', () => handleCardClick(cardDiv));
+                container.appendChild(cardDiv);
+                cardDiv.addEventListener('mousemove', createSparkles);
+            });
+
+            overlay.addEventListener('click', () => {
+                if (expandedCard) {
+                    handleCardClick(expandedCard);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createCards();
+            createFloatingHearts(); // Crear corazones flotantes al cargar
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.5; // Volumen al 50%
+            
+            // Intenta reproducir la música cuando el usuario interactúe con la página
+            const startMusic = () => {
+                music.play()
+                .then(() => {
+                    // Si la música comienza exitosamente, removemos el event listener
+                    document.removeEventListener('click', startMusic);
+                })
+                .catch(error => {
+                    console.log("Error al reproducir la música:", error);
+                });
+            };
+            
+            document.addEventListener('click', startMusic);
+        });
+
+        function createSparkles(event) {
+            const card = event.currentTarget;
+            for(let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                
+                // Posición inicial
+                const x = event.offsetX;
+                const y = event.offsetY;
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                
+                // Movimiento aleatorio
+                const moveX = (Math.random() - 0.5) * 100;
+                const moveY = (Math.random() - 0.5) * 100;
+                sparkle.style.setProperty('--moveX', `${moveX}px`);
+                sparkle.style.setProperty('--moveY', `${moveY}px`);
+                
+                card.appendChild(sparkle);
+                
+                // Eliminar después de la animación
+                setTimeout(() => sparkle.remove(), 1500);
+            }
+        }  
+    </script>
+    
+</body>
+</html>
