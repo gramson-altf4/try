@@ -151,12 +151,6 @@ body {
     width: 250px;
     height: 300px;
 }
-/* Ajustes adicionales para mantener la proporción */
-.card.expanded .card-inner,
-.card.expanded .card-front,
-.card.expanded .card-back {
-    height: 100%;
-}
 
 /* Ajustes específicos para móviles */
 @media (max-width: 768px) {
