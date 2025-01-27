@@ -149,7 +149,25 @@ body {
     transform: translate(-50%, -50%) scale(2);
     z-index: 1000;
     width: 250px;
-    height: 200px;
+    height: 300px;
+}
+/* Ajustes adicionales para mantener la proporción */
+.card.expanded .card-inner,
+.card.expanded .card-front,
+.card.expanded .card-back {
+    height: 100%;
+}
+
+/* Ajustes responsivos para móviles */
+@media (max-width: 768px) {
+    .card.expanded {
+        transform: translate(-50%, -50%) scale(1.5); /* Escala reducida en móviles */
+        height: 350px; /* Un poco más alto en móviles para mejor legibilidad */
+    }
+    
+    .card.expanded .card-back {
+        padding: 15px; /* Ajuste del padding para mejor uso del espacio */
+    }
 }
 
 .card-inner {
