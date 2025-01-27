@@ -257,6 +257,57 @@ if (document.readyState === 'loading') {
                 setTimeout(() => sparkle.remove(), 1500);
             }
         }  
+        // Añade esto al final de tu archivo JavaScript existente
+document.addEventListener('DOMContentLoaded', function() {
+    // Manejo de efectos táctiles
+    document.querySelectorAll('.card').forEach(card => {
+        let touchStartY;
+        let touchStartX;
+
+        card.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            
+            // Añadir efecto de vibración
+            card.classList.add('vibrating');
+            
+            // Vibración del dispositivo si está disponible
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
+
+        card.addEventListener('touchmove', (e) => {
+            if (!touchStartY) return;
+
+            const touchEndY = e.touches[0].clientY;
+            const touchEndX = e.touches[0].clientX;
+            
+            const diffY = touchStartY - touchEndY;
+            const diffX = Math.abs(touchStartX - touchEndX);
+
+            // Si el deslizamiento es más vertical que horizontal
+            if (diffY > diffX && diffY > 50) {
+                card.classList.add('flipped');
+            } else if (diffY < -50) {
+                card.classList.remove('flipped');
+            }
+        });
+
+        card.addEventListener('touchend', () => {
+            touchStartY = null;
+            touchStartX = null;
+            card.classList.remove('vibrating');
+        });
+
+        // Remover clase de vibración al terminar la animación
+        card.addEventListener('animationend', () => {
+            if (card.classList.contains('vibrating')) {
+                card.classList.remove('vibrating');
+            }
+        });
+    });
+});
     </script>
     
 </body>
